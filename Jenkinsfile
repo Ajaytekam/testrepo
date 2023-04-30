@@ -64,7 +64,7 @@ pipeline {
             // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
             // true = set pipeline to UNSTABLE, false = don't
             //waitForQualityGate abortPipeline: true
-            waitForQualityGate abortPipeline: true, credentialsId: 'sonar-api'  
+            waitForQualityGate abortPipeline: true, credentialsId: 'sonar-token'  
         }
       }
     }
