@@ -40,26 +40,14 @@ pipeline {
 
       stage('SonarQube Code Analysis') {
 
-        environment {
-            scannerHome = tool 'Sonar4.8'
-        }
-
         steps {
             script {
                 withSonarQubeEnv(credentialsId: 'sonarqube') { 
-                    sh '''${scannerHome}/bin/sonar-scanner -X \
-                    -Dsonar.projectKey=vprofile \
-                    -Dsonar.projectName=vprofile \
-                    -Dsonar.projectVersion=1.0 \
-                    -Dsonar.sources=src/ \
-                    -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-                    -Dsonar.junit.reportsPath=target/surefire-reports/ \
-                    -Dsonar.jacoco.reportsPath=target/jacoco.exec \
-                    -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml
-                   '''
+                  sh 'mvn clean package sonar:sonar'
                 }
             }
         }
+
       }
   }  
 }
