@@ -42,9 +42,8 @@ pipeline {
 
         steps {
             script {
-                withSonarQubeEnv(credentialsId: 'sonarqube') { 
-                  sh '''sonar-scanner --help;
-                        sonar-scanner -X \
+                withSonarQubeEnv(credentialsId: 'sonar-token') { 
+                  sh '''sonar-scanner -X \
                         -Dsonar.projectKey=vprofile \
                         -Dsonar.projectName=vprofile \
                         -Dsonar.projectVersion=1.0 \
