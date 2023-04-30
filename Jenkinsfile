@@ -7,6 +7,18 @@ pipeline {
         }
       }
 
+      stage('Unit Testing') {
+        steps {
+            sh 'mvn test'
+        }
+      }
+ 
+      stage('Integration Testing') {
+        steps {
+            sh 'mvn verify -DskipUnitTests'
+        }
+      }
+
       stage('Maven Build') {
          steps {
             sh 'mvn clean install -DskipTests'
@@ -19,5 +31,12 @@ pipeline {
            }
          }
       }
+
+      stage('Checkstyle Analysis') {
+        steps {
+            sh 'mvn checkstyle:checkstyle'
+        }
+      }
+
   }  
 }
