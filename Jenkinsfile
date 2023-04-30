@@ -38,7 +38,7 @@ pipeline {
         }
       }
 
-      stage('SonarQube Code Analysis') {
+    stage('SonarQube Code Analysis') {
 
         steps {
             script {
@@ -58,7 +58,7 @@ pipeline {
                 }
             }
         }
+    }
 
-      }
   }  
 }
