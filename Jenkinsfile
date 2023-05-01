@@ -1,7 +1,5 @@
 pipeline {
-  agent { dockerfile true 
-      args '-v /var/run/docker.sock:/var/run/docker.sock'
-  }
+  agent { dockerfile true }
   stages {
       stage('Git Checkout') {
         steps {
@@ -22,6 +20,7 @@ pipeline {
          }
       }
 
+      agent none
       stage('Docker ImageBuild') {
         steps {
             // sh 'docker image build -t vprofileapp:latest . -f Dockerfile01'
