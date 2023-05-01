@@ -29,10 +29,12 @@ pipeline {
       }
 
       stage('Docker ImageBuild') {
-        docker {
-          image 'docker:latest'
-          args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
-        }
+          agent {
+            docker {
+              image 'docker:latest'
+              args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
+            }
+          }
         steps {
             // sh 'docker image build -t vprofileapp:latest . -f Dockerfile01'
             sh 'docker --help'
