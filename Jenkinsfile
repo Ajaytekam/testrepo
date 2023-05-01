@@ -1,10 +1,5 @@
 pipeline {
-  agent { docker {
-            dockerfile true
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-            reuseNode true
-          }
-        }
+  agent { dockerfile true }
   stages {
       stage('Git Checkout') {
         steps {
@@ -26,7 +21,13 @@ pipeline {
       }
 
       stage('Docker ImageBuild') {
-        agent none
+        agent {
+          docker {
+            image 'docker:latest'
+            reuseNode true                                                                          
+          }
+        }
+
         steps {
             // sh 'docker image build -t vprofileapp:latest . -f Dockerfile01'
             sh 'docker --help'
