@@ -20,12 +20,12 @@ pipeline {
          }
       }
 
-      stage('Some Tests') {
-          steps {
-              sh 'pwd'
-              sh 'ls -al'
-              sh 'ls target/'
-          }
-      }
-  }  
+      stage('Docker ImageBuild') {
+        steps {
+            script {
+                dockerImage = docker.build(appRegistry + ":$BUILD_NUMBER", ".", "-f", "Dockerfile01")
+            }           
+        }
+      }  
+  }
 }
