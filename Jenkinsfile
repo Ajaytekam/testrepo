@@ -20,8 +20,8 @@ pipeline {
          }
       }
 
-      agent none
       stage('Docker ImageBuild') {
+        agent none
         steps {
             // sh 'docker image build -t vprofileapp:latest . -f Dockerfile01'
             sh 'docker --help'
