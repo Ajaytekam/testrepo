@@ -1,5 +1,10 @@
 pipeline {
-  agent { dockerfile true }
+  agent { docker {
+            dockerfile true
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            reuseNode true
+          }
+        }
   stages {
       stage('Git Checkout') {
         steps {
