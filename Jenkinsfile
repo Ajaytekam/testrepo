@@ -21,7 +21,7 @@ pipeline {
       }
 
       stage('Docker ImageBuild') {
-        agent none
+        agent { label 'master' }
         steps {
             sh 'docker image build -t vprofileapp:latest . -f Dockerfile01'
         }
