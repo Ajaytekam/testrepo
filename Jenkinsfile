@@ -22,10 +22,8 @@ pipeline {
 
       stage('Some Tests') {
           steps {
-              sh '''ls -al;
-                    whoami;
-                    pwd;
-              '''
+              sh 'pwd'
+              sh 'ls target/'
           }
       }
   }  
