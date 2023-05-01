@@ -1,6 +1,15 @@
 pipeline {
-  agent { dockerfile true }
+
+  agent {
+    docker {
+      image 'ajaytekam/java-builder:latest'
+      args '-v /var/run/docker.sock:/var/run/docker.sock'
+      reuseNode true                                                                          
+    }
+  }
+
   stages {
+
       stage('Git Checkout') {
         steps {
           git branch: 'main', url: 'https://github.com/Ajaytekam/testrepo.git'
@@ -21,13 +30,6 @@ pipeline {
       }
 
       stage('Docker ImageBuild') {
-        agent {
-          docker {
-            image 'docker:latest'
-            reuseNode true                                                                          
-          }
-        }
-
         steps {
             // sh 'docker image build -t vprofileapp:latest . -f Dockerfile01'
             sh 'docker --help'
