@@ -3,7 +3,6 @@ pipeline {
   agent {
     docker {
       image 'ajaytekam/java-builder:latest'
-      args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
       reuseNode true                                                                          
     }
   }
@@ -30,6 +29,10 @@ pipeline {
       }
 
       stage('Docker ImageBuild') {
+        docker {
+          image 'docker:latest'
+          args '--privileged -v /var/run/docker.sock:/var/run/docker.sock'
+        }
         steps {
             // sh 'docker image build -t vprofileapp:latest . -f Dockerfile01'
             sh 'docker --help'
