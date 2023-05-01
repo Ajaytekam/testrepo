@@ -23,7 +23,7 @@ pipeline {
       stage('Docker ImageBuild') {
         steps {
             script {
-                dockerImage = docker.build(appRegistry + ":$BUILD_NUMBER", ".", "-f", "Dockerfile01")
+                dockerImage = docker.build("vprofileapp:$BUILD_NUMBER", ".", "-f", "Dockerfile01")
             }           
         }
       }  
