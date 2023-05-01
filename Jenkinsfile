@@ -23,6 +23,7 @@ pipeline {
       stage('Some Tests') {
           steps {
               sh 'pwd'
+              sh 'ls -al'
               sh 'ls target/'
           }
       }
