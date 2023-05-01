@@ -21,7 +21,7 @@ pipeline {
       }
 
       stage('Docker ImageBuild') {
-        agent Linux
+        agent { label 'Linux'}
         steps {
             // sh 'docker image build -t vprofileapp:latest . -f Dockerfile01'
             sh 'whoami'
