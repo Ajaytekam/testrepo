@@ -3,7 +3,7 @@ pipeline {
   agent any
 
   environment {
-    DOCKERHUB_CREDS = credentials('dockerhub-creds')   
+    DOCKERHUB_CREDENTIALS=credentials('dockerhub-creds')   
   }
 
   stages {
@@ -129,7 +129,7 @@ pipeline {
        
       steps {
         // login to dockerhub 
-        sh 'echo $DOCKERHUB_CREDS | docker login -u $DOCKERHUB_CREDS --password-stdin'  
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'  
         // push the docker image 
         sh 'docker push ajaytekam/vprofileappimg:latest'
       }
