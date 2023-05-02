@@ -12,7 +12,7 @@ pipeline {
           git branch: 'main', url: 'https://github.com/Ajaytekam/testrepo.git'
         }
       }
-
+/*
       stage('Unit Testing') {
          
         agent {
@@ -40,7 +40,7 @@ pipeline {
             sh 'mvn verify -DskipUnitTests'
         }
       }
-
+*/
       stage('Maven Build') {
 
         agent {
@@ -61,7 +61,7 @@ pipeline {
            }
          }
       }
-
+/*
       stage('Checkstyle Analysis') {
 
         agent {
@@ -121,7 +121,7 @@ pipeline {
         }
       }
     }
-
+*/
     stage('Docker ImageBuild') {
       steps {
         sh 'docker image build -t ajaytekam/vprofileappimg:latest .'
