@@ -114,7 +114,7 @@ pipeline {
 
     stage('Docker ImageBuild') {
       steps {
-        sh 'docker image build -t vprofileapp:latest .'
+        sh 'docker image build -t ajaytekam/vprofileappimg:$BUILD_NUMBER -t ajaytekam/vprofileappimg:latest .'
       }
     }  
   }  
