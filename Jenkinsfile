@@ -124,7 +124,7 @@ pipeline {
 
     stage('Docker ImageBuild') {
       steps {
-        sh 'docker image build -t ajaytekam/vprofileappimg:latest .'
+        sh 'docker image build -t ajaytekam/vprofileappimg:$BUILD_NUMBER -t ajaytekam/vprofileappimg:latest .'
       }
     }  
 
@@ -134,7 +134,7 @@ pipeline {
         // login to dockerhub 
         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
         // push the docker image 
-        sh 'docker push ajaytekam/vprofileappimg:latest'
+        sh 'docker push ajaytekam/vprofileappimg --all-tags'
       }
 
       post {
