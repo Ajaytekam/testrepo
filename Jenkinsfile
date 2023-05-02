@@ -1,3 +1,8 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger'                
+]
+
 pipeline {
   
   agent any
@@ -41,27 +46,6 @@ pipeline {
         }
       }
       
-      stage('Maven Build') {
-
-        agent {
-            docker {
-              image 'ajaytekam/java-builder:latest'
-              reuseNode true                                                       
-            }
-        }
-          
-        steps {
-            sh 'mvn clean install -DskipTests'
-        }
-
-         post {
-           success {
-             echo 'Now archiving it...'
-             archiveArtifacts artifacts: '**/target/*.war'
-           }
-         }
-      }
-
       stage('Checkstyle Analysis') {
 
         agent {
@@ -120,7 +104,38 @@ pipeline {
             waitForQualityGate abortPipeline: true, credentialsId: 'sonar-token'  
         }
       }
+
+      post {
+        failure {
+          echo 'Slack Notification.'
+          slackSend channel: '#jenkinscicdtest',
+          color: COLOR_MAP[currentBuild.currentResult],
+          message: "*${currentBuild.currentResult}* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"    
+        }
+      }
     }
+
+    stage('Maven Build') {
+
+      agent {
+        docker {
+          image 'ajaytekam/java-builder:latest'
+          reuseNode true                                                       
+        }
+      }
+          
+      steps {
+        sh 'mvn clean install -DskipTests'
+      }
+
+      post {
+        success {
+          echo 'Now archiving it...'
+          archiveArtifacts artifacts: '**/target/*.war'
+        }
+      }
+    }
+
 
     stage('Docker ImageBuild') {
       steps {
