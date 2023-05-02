@@ -2,6 +2,10 @@ pipeline {
   
   agent any
 
+  environment {
+    DOCKERHUB_CREDS = credentials('dockerhub-creds')   
+  }
+
   stages {
       stage('Git Checkout') {
         steps {
@@ -60,7 +64,8 @@ pipeline {
         agent {
             docker {
               image 'ajaytekam/java-builder:latest'
-              reuseNode true                                                       }
+              reuseNode true                                                       
+            }
         }
 
         steps {
@@ -73,7 +78,8 @@ pipeline {
         agent {
             docker {
               image 'ajaytekam/java-builder:latest'
-              reuseNode true                                                       }
+              reuseNode true                                                       
+            }
         }
 
         steps {
@@ -99,7 +105,8 @@ pipeline {
         agent {
             docker {
               image 'ajaytekam/java-builder:latest'
-              reuseNode true                                                       }
+              reuseNode true                                                       
+            }
         }
 
       steps{
@@ -114,8 +121,25 @@ pipeline {
 
     stage('Docker ImageBuild') {
       steps {
-        sh 'docker image build -t vprofileapp:latest .'
+        sh 'docker image build -t ajaytekam/vprofileappimg:latest .'
       }
     }  
+
+    stage('Push Image into Dockerhub') {
+       
+      steps {
+        // login to dockerhub 
+        sh 'echo $DOCKERHUB_CREDS | docker login -u $DOCKERHUB_CREDS --password-stdin'  
+        // push the docker image 
+        sh 'docker push ajaytekam/vprofileappimg:latest'
+      }
+
+      post {
+          always {
+              sh 'docker logout'
+          }
+      }
+    }
+
   }  
 }
